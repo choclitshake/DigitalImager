@@ -20,7 +20,7 @@ namespace DigitalImager
         private Panel previewPanel;
         private FilterInfoCollection videoDevices;
         private VideoCaptureDevice videoSource;
-        private enum EffectMode { None, Copy, Greyscale, Invert, Sepia, Histogram, Subtract }
+        private enum EffectMode { None, Copy, Greyscale, Invert, Sepia, Histogram, Subtract, Smooth, Gaussian, Sharpen, MeanRemoval, EmbossLaplacian, EmbossHorzVert, EmbossAllDir, EmbossLossy, EmbossHorizontal, EmbossVertical }
         private EffectMode currentEffect = EffectMode.None;
         private bool isWebcamRunning = false;
 
@@ -229,6 +229,202 @@ namespace DigitalImager
             }
         }
 
+        private void smoothToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (isWebcamRunning)
+            {
+                currentEffect = EffectMode.Smooth;
+            }
+            else
+            {
+                if (pictureBox1.Image == null)
+                {
+                    MessageBox.Show("Load an image first.");
+                    return;
+                }
+                Bitmap src = new Bitmap(pictureBox1.Image);
+                Bitmap result = new Bitmap(src);
+                BitmapFilter.Smooth(result);
+                pictureBox3.Image?.Dispose();
+                pictureBox3.Image = result;
+                src.Dispose();
+            }
+        }
+
+        private void gaussianBlurToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (isWebcamRunning)
+            {
+                currentEffect = EffectMode.Gaussian;
+            }
+            else
+            {
+                if (pictureBox1.Image == null)
+                {
+                    MessageBox.Show("Load an image first.");
+                    return;
+                }
+                Bitmap src = new Bitmap(pictureBox1.Image);
+                Bitmap result = new Bitmap(src);
+                BitmapFilter.GaussianBlur(result);
+                pictureBox3.Image?.Dispose();
+                pictureBox3.Image = result;
+                src.Dispose();
+            }
+        }
+
+        private void sharpenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (isWebcamRunning)
+            {
+                currentEffect = EffectMode.Sharpen;
+            }
+            else
+            {
+                if (pictureBox1.Image == null)
+                {
+                    MessageBox.Show("Load an image first.");
+                    return;
+                }
+                Bitmap src = new Bitmap(pictureBox1.Image);
+                Bitmap result = new Bitmap(src);
+                BitmapFilter.Sharpen(result);
+                pictureBox3.Image?.Dispose();
+                pictureBox3.Image = result;
+                src.Dispose();
+            }
+        }
+
+        private void meanRemovalToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (isWebcamRunning)
+            {
+                currentEffect = EffectMode.MeanRemoval;
+            }
+            else
+            {
+                if (pictureBox1.Image == null)
+                {
+                    MessageBox.Show("Load an image first.");
+                    return;
+                }
+                Bitmap src = new Bitmap(pictureBox1.Image);
+                Bitmap result = new Bitmap(src);
+                BitmapFilter.MeanRemoval(result);
+                pictureBox3.Image?.Dispose();
+                pictureBox3.Image = result;
+                src.Dispose();
+            }
+        }
+
+        private void embossLaplacianToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (isWebcamRunning)
+            {
+                currentEffect = EffectMode.EmbossLaplacian;
+            }
+            else
+            {
+                if (pictureBox1.Image == null) { MessageBox.Show("Load an image first."); return; }
+                Bitmap src = new Bitmap(pictureBox1.Image);
+                Bitmap result = new Bitmap(src);
+                BitmapFilter.EmbossLaplacian(result);
+                pictureBox3.Image?.Dispose();
+                pictureBox3.Image = result;
+                src.Dispose();
+            }
+        }
+
+        private void embossHorzVertToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (isWebcamRunning)
+            {
+                currentEffect = EffectMode.EmbossHorzVert;
+            }
+            else
+            {
+                if (pictureBox1.Image == null) { MessageBox.Show("Load an image first."); return; }
+                Bitmap src = new Bitmap(pictureBox1.Image);
+                Bitmap result = new Bitmap(src);
+                BitmapFilter.EmbossHorzVert(result);
+                pictureBox3.Image?.Dispose();
+                pictureBox3.Image = result;
+                src.Dispose();
+            }
+        }
+
+        private void embossAllDirToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (isWebcamRunning)
+            {
+                currentEffect = EffectMode.EmbossAllDir;
+            }
+            else
+            {
+                if (pictureBox1.Image == null) { MessageBox.Show("Load an image first."); return; }
+                Bitmap src = new Bitmap(pictureBox1.Image);
+                Bitmap result = new Bitmap(src);
+                BitmapFilter.EmbossAllDir(result);
+                pictureBox3.Image?.Dispose();
+                pictureBox3.Image = result;
+                src.Dispose();
+            }
+        }
+
+        private void embossLossyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (isWebcamRunning)
+            {
+                currentEffect = EffectMode.EmbossLossy;
+            }
+            else
+            {
+                if (pictureBox1.Image == null) { MessageBox.Show("Load an image first."); return; }
+                Bitmap src = new Bitmap(pictureBox1.Image);
+                Bitmap result = new Bitmap(src);
+                BitmapFilter.EmbossLossy(result);
+                pictureBox3.Image?.Dispose();
+                pictureBox3.Image = result;
+                src.Dispose();
+            }
+        }
+
+        private void embossHorizontalToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (isWebcamRunning)
+            {
+                currentEffect = EffectMode.EmbossHorizontal;
+            }
+            else
+            {
+                if (pictureBox1.Image == null) { MessageBox.Show("Load an image first."); return; }
+                Bitmap src = new Bitmap(pictureBox1.Image);
+                Bitmap result = new Bitmap(src);
+                BitmapFilter.EmbossHorizontal(result);
+                pictureBox3.Image?.Dispose();
+                pictureBox3.Image = result;
+                src.Dispose();
+            }
+        }
+
+        private void embossVerticalToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (isWebcamRunning)
+            {
+                currentEffect = EffectMode.EmbossVertical;
+            }
+            else
+            {
+                if (pictureBox1.Image == null) { MessageBox.Show("Load an image first."); return; }
+                Bitmap src = new Bitmap(pictureBox1.Image);
+                Bitmap result = new Bitmap(src);
+                BitmapFilter.EmbossVertical(result);
+                pictureBox3.Image?.Dispose();
+                pictureBox3.Image = result;
+                src.Dispose();
+            }
+        }
+
         private void turnOnToolStripMenuItem_Click(object sender, EventArgs e)
         {
             isWebcamRunning = true;
@@ -309,6 +505,46 @@ namespace DigitalImager
                     break;
                 case EffectMode.Histogram:
                     processedFrame = ResizeAndCrop(GenerateHistogram((Bitmap)rawFrame.Clone()), pictureBox3.Width, pictureBox3.Height);
+                    break;
+                case EffectMode.Smooth:
+                    processedFrame = ResizeAndCrop((Bitmap)rawFrame.Clone(), pictureBox3.Width, pictureBox3.Height);
+                    BitmapFilter.Smooth(processedFrame);
+                    break;
+                case EffectMode.Gaussian:
+                    processedFrame = ResizeAndCrop((Bitmap)rawFrame.Clone(), pictureBox3.Width, pictureBox3.Height);
+                    BitmapFilter.GaussianBlur(processedFrame);
+                    break;
+                case EffectMode.Sharpen:
+                    processedFrame = ResizeAndCrop((Bitmap)rawFrame.Clone(), pictureBox3.Width, pictureBox3.Height);
+                    BitmapFilter.Sharpen(processedFrame);
+                    break;
+                case EffectMode.MeanRemoval:
+                    processedFrame = ResizeAndCrop((Bitmap)rawFrame.Clone(), pictureBox3.Width, pictureBox3.Height);
+                    BitmapFilter.MeanRemoval(processedFrame);
+                    break;
+                case EffectMode.EmbossLaplacian:
+                    processedFrame = ResizeAndCrop((Bitmap)rawFrame.Clone(), pictureBox3.Width, pictureBox3.Height);
+                    BitmapFilter.EmbossLaplacian(processedFrame);
+                    break;
+                case EffectMode.EmbossHorzVert:
+                    processedFrame = ResizeAndCrop((Bitmap)rawFrame.Clone(), pictureBox3.Width, pictureBox3.Height);
+                    BitmapFilter.EmbossHorzVert(processedFrame);
+                    break;
+                case EffectMode.EmbossAllDir:
+                    processedFrame = ResizeAndCrop((Bitmap)rawFrame.Clone(), pictureBox3.Width, pictureBox3.Height);
+                    BitmapFilter.EmbossAllDir(processedFrame);
+                    break;
+                case EffectMode.EmbossLossy:
+                    processedFrame = ResizeAndCrop((Bitmap)rawFrame.Clone(), pictureBox3.Width, pictureBox3.Height);
+                    BitmapFilter.EmbossLossy(processedFrame);
+                    break;
+                case EffectMode.EmbossHorizontal:
+                    processedFrame = ResizeAndCrop((Bitmap)rawFrame.Clone(), pictureBox3.Width, pictureBox3.Height);
+                    BitmapFilter.EmbossHorizontal(processedFrame);
+                    break;
+                case EffectMode.EmbossVertical:
+                    processedFrame = ResizeAndCrop((Bitmap)rawFrame.Clone(), pictureBox3.Width, pictureBox3.Height);
+                    BitmapFilter.EmbossVertical(processedFrame);
                     break;
             }
 
@@ -629,6 +865,208 @@ namespace DigitalImager
 
             scaled.Dispose();
             return cropped;
+        }
+    }
+
+    public class ConvMatrix
+    {
+        public int TopLeft = 0, TopMid = 0, TopRight = 0;
+        public int MidLeft = 0, Pixel = 0, MidRight = 0;
+        public int BottomLeft = 0, BottomMid = 0, BottomRight = 0;
+        public int Factor = 1;
+        public int Offset = 0;
+
+        public void SetAll(int nVal)
+        {
+            TopLeft = TopMid = TopRight = MidLeft = Pixel = MidRight =
+                      BottomLeft = BottomMid = BottomRight = nVal;
+        }
+    }
+
+    public static class BitmapFilter
+    {
+        public static bool Conv3x3(Bitmap b, ConvMatrix m)
+        {
+            if (m.Factor == 0) return false;
+
+            Bitmap bSrc = (Bitmap)b.Clone();
+
+            BitmapData bmData = b.LockBits(new Rectangle(0, 0, b.Width, b.Height),
+                                ImageLockMode.ReadWrite,
+                                PixelFormat.Format24bppRgb);
+
+            BitmapData bmSrc = bSrc.LockBits(new Rectangle(0, 0, bSrc.Width, bSrc.Height),
+                                 ImageLockMode.ReadWrite,
+                                 PixelFormat.Format24bppRgb);
+
+            int stride = bmData.Stride;
+            int stride2 = stride * 2;
+
+            IntPtr Scan0 = bmData.Scan0;
+            IntPtr SrcScan0 = bmSrc.Scan0;
+
+            unsafe
+            {
+                byte* p = (byte*)(void*)Scan0;
+                byte* pSrc = (byte*)(void*)SrcScan0;
+
+                int nOffset = stride - b.Width * 3;
+                int nWidth = b.Width - 2;
+                int nHeight = b.Height - 2;
+
+                int nPixel;
+
+                for (int y = 0; y < nHeight; ++y)
+                {
+                    for (int x = 0; x < nWidth; ++x)
+                    {
+                        nPixel = (((pSrc[2] * m.TopLeft) +
+                                   (pSrc[5] * m.TopMid) +
+                                   (pSrc[8] * m.TopRight) +
+                                   (pSrc[2 + stride] * m.MidLeft) +
+                                   (pSrc[5 + stride] * m.Pixel) +
+                                   (pSrc[8 + stride] * m.MidRight) +
+                                   (pSrc[2 + stride2] * m.BottomLeft) +
+                                   (pSrc[5 + stride2] * m.BottomMid) +
+                                   (pSrc[8 + stride2] * m.BottomRight))
+                                   / m.Factor) + m.Offset;
+
+                        if (nPixel < 0) nPixel = 0;
+                        if (nPixel > 255) nPixel = 255;
+                        p[5 + stride] = (byte)nPixel;
+
+                        nPixel = (((pSrc[1] * m.TopLeft) +
+                                   (pSrc[4] * m.TopMid) +
+                                   (pSrc[7] * m.TopRight) +
+                                   (pSrc[1 + stride] * m.MidLeft) +
+                                   (pSrc[4 + stride] * m.Pixel) +
+                                   (pSrc[7 + stride] * m.MidRight) +
+                                   (pSrc[1 + stride2] * m.BottomLeft) +
+                                   (pSrc[4 + stride2] * m.BottomMid) +
+                                   (pSrc[7 + stride2] * m.BottomRight))
+                                   / m.Factor) + m.Offset;
+
+                        if (nPixel < 0) nPixel = 0;
+                        if (nPixel > 255) nPixel = 255;
+                        p[4 + stride] = (byte)nPixel;
+
+                        nPixel = (((pSrc[0] * m.TopLeft) +
+                                   (pSrc[3] * m.TopMid) +
+                                   (pSrc[6] * m.TopRight) +
+                                   (pSrc[0 + stride] * m.MidLeft) +
+                                   (pSrc[3 + stride] * m.Pixel) +
+                                   (pSrc[6 + stride] * m.MidRight) +
+                                   (pSrc[0 + stride2] * m.BottomLeft) +
+                                   (pSrc[3 + stride2] * m.BottomMid) +
+                                   (pSrc[6 + stride2] * m.BottomRight))
+                                   / m.Factor) + m.Offset;
+
+                        if (nPixel < 0) nPixel = 0;
+                        if (nPixel > 255) nPixel = 255;
+                        p[3 + stride] = (byte)nPixel;
+
+                        p += 3;
+                        pSrc += 3;
+                    }
+
+                    p += nOffset;
+                    pSrc += nOffset;
+                }
+            }
+
+            b.UnlockBits(bmData);
+            bSrc.UnlockBits(bmSrc);
+            return true;
+        }
+        public static bool Smooth(Bitmap b, int weight = 1)
+        {
+            ConvMatrix m = new ConvMatrix();
+            m.SetAll(1);
+            m.Pixel = weight;
+            m.Factor = weight + 8;
+            return Conv3x3(b, m);
+        }
+
+        public static bool GaussianBlur(Bitmap b)
+        {
+            ConvMatrix m = new ConvMatrix();
+            m.TopLeft = m.BottomRight = m.TopRight = m.BottomLeft = 1;
+            m.TopMid = m.MidLeft = m.MidRight = m.BottomMid = 2;
+            m.Pixel = 4;
+            m.Factor = 16;
+            return Conv3x3(b, m);
+        }
+
+        public static bool Sharpen(Bitmap b)
+        {
+            ConvMatrix m = new ConvMatrix();
+            m.TopLeft = m.BottomRight = m.TopRight = m.BottomLeft = 0;
+            m.TopMid = m.MidLeft = m.MidRight = m.BottomMid = -2;
+            m.Pixel = 11;
+            m.Factor = 3;
+            return Conv3x3(b, m);
+        }
+
+        public static bool MeanRemoval(Bitmap b)
+        {
+            ConvMatrix m = new ConvMatrix();
+            m.SetAll(-1);
+            m.Pixel = 9;
+            m.Factor = 1;
+            return Conv3x3(b, m);
+        }
+
+        public static bool EmbossLaplacian(Bitmap b)
+        {
+            ConvMatrix m = new ConvMatrix();
+            m.TopLeft = -1; m.TopMid = 0; m.TopRight = -1;
+            m.MidLeft = 0; m.Pixel = 4; m.MidRight = 0;
+            m.BottomLeft = -1; m.BottomMid = 0; m.BottomRight = -1;
+            m.Factor = 1; m.Offset = 127;
+            return Conv3x3(b, m);
+        }
+
+        public static bool EmbossHorzVert(Bitmap b)
+        {
+            ConvMatrix m = new ConvMatrix();
+            m.TopMid = -1; m.MidLeft = -1; m.Pixel = 4; m.MidRight = -1; m.BottomMid = -1;
+            m.Factor = 1; m.Offset = 127;
+            return Conv3x3(b, m);
+        }
+
+        public static bool EmbossAllDir(Bitmap b)
+        {
+            ConvMatrix m = new ConvMatrix();
+            m.SetAll(-1);
+            m.Pixel = 8;
+            m.Factor = 1; m.Offset = 127;
+            return Conv3x3(b, m);
+        }
+
+        public static bool EmbossLossy(Bitmap b)
+        {
+            ConvMatrix m = new ConvMatrix();
+            m.TopLeft = 1; m.TopMid = -2; m.TopRight = 1;
+            m.MidLeft = -2; m.Pixel = 4; m.MidRight = -2;
+            m.BottomLeft = -2; m.BottomMid = 1; m.BottomRight = -2;
+            m.Factor = 1; m.Offset = 127;
+            return Conv3x3(b, m);
+        }
+
+        public static bool EmbossHorizontal(Bitmap b)
+        {
+            ConvMatrix m = new ConvMatrix();
+            m.MidLeft = -1; m.Pixel = 2; m.MidRight = -1;
+            m.Factor = 1; m.Offset = 127;
+            return Conv3x3(b, m);
+        }
+
+        public static bool EmbossVertical(Bitmap b)
+        {
+            ConvMatrix m = new ConvMatrix();
+            m.TopMid = -1; m.BottomMid = 1; 
+            m.Factor = 1; m.Offset = 127;
+            return Conv3x3(b, m);
         }
     }
 }
